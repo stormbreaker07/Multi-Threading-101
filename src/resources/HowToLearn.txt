@@ -31,5 +31,8 @@
     that have 2 method both using synchronization block and lock on object after first thread lock the object we can
     using wait() to let the thread go in wait state and after that other thread that is in line to lock the thread will
     lock it and you can pass notify() in it to tell waited thread that it can run, please note that even if you use
-    notify() even then the method will run till end.    
+    notify() even then the method will run till end.
+    in waitAndNotify package we coded 2 major asked question in it.
+        1- Producer and Consumer (that can be modified)
+        2- Odd and Even print using different Threads.
 
