@@ -6,13 +6,13 @@
 
 5- Memory Management
     Typical difference between Thread and Process is, thread runs on a shared memory while process run in
-    seperate memory spaces.
-    a Thread is a smallest unit that can use to compute some operation, a process can be divided in to
+    separate memory spaces.
+    a Thread is the smallest unit that can use to compute some operation, a process can be divided into
     multiple operations and these operations can be used on multiple thread to execute.
     Thread has its own stack memory, cache but they share same heap memory that's why we need operations like
-    synchronization on the block of code or method so that we can acess object store in heap memory and
-    do not cause deadlock on these resources, using of synchronization on resource so that so that thread
-    didnt interfere is called mutual exclusion.
+    synchronization on the block of code or method so that we can access object store in heap memory and
+    do not cause deadlock on these resources, using of synchronization on resource so that thread
+    didn't interfere is called mutual exclusion.
 
 
 6- resourceLocking
@@ -30,9 +30,78 @@
     Wait and notify are use to do communication between thread let see what type of communication, for ex we have a class
     that have 2 method both using synchronization block and lock on object after first thread lock the object we can
     using wait() to let the thread go in wait state and after that other thread that is in line to lock the thread will
-    lock it and you can pass notify() in it to tell waited thread that it can run, please note that even if you use
+    lock it, and you can pass notify() in it to tell waited thread that it can run, please note that even if you use
     notify() even then the method will run till end.
     in waitAndNotify package we coded 2 major asked question in it.
         1- Producer and Consumer (that can be modified)
         2- Odd and Even print using different Threads.
+    If you dont want to use wait and notify then there is one more way that is using ReentrantLock:
+    Lock lock = new ReentrantLock();
+    Condition condition = lock.newCondition();
+
+    we don't need to use synchronize in it we just write lock.lock() to lock the resource and lock.unlock() to unlock
+    the thread, for wait and notify we use condition.await() (same as wait) and condition.signal() (same as notify).
+8- lockAndCondition
+    let just convert pub sub using lock and condition
+
+    Comparison between lock and synchronization
+    So for example, we can make a lock fair, which means that it can prevent thread starvation because synchronize
+    blocks are unfair by default.This is a huge advantage of locks.Then we can check whether a given lock is held or
+    not with reentrant locks, which means that we are able to check whether the given lock is acquired by another
+    thread or not.And of course we cannot do that with the help of synchronized locks.So this is again, a huge advantage
+    of locks.Then we can get the list of threads waiting for the given lock, but synchronize blocks are nicer.We don't
+    have to use try-catch-finally blocks and usually software engineers try to avoid try-catch-finally blocks.
+
+    1. What is ReentrantLock?
+    ReentrantLock is a synchronization mechanism in Java's java.util.concurrent.locks package. It provides a more
+    flexible and feature-rich alternative to the traditional synchronized keyword. It is called "Reentrant" because
+    the same thread can acquire the lock multiple times without getting blocked, as long as it releases the lock the
+    same number of times.
+
+    2. Why Use ReentrantLock Instead of synchronized?
+    ✅ More control over locking → tryLock(), lockInterruptibly(), etc.
+    ✅ Fairness policy → Supports fair locking (true in constructor).
+    ✅ Multiple Conditions → Can create multiple Condition objects.
+    ✅ Supports Interruptible Locking → Unlike synchronized, a thread waiting for a ReentrantLock can be interrupted.
+    ✅ Explicit Unlocking → Prevents accidental deadlocks.
+
+    3. Features of ReentrantLock
+        1. Fair vs. Non-Fair Lock
+        2. Reentrant Behavior
+        3. Try-Lock Mechanism
+        4. Interruptible Locking
+
+Deadlock and Livelock:
+
+Semaphore and Mutex:
+    mutex is nothing but a binary semaphore(that is worked on 0 or 1 ) that is either resource available or not, while
+    semaphore is a abstract data type use to let multiple threads to work on finite resource while in mutex the shared
+    resource is only one.
+
+
+forkAndJoin:
+    well its a really famous framework used in lots of parellel computing framework, a good example is parellelStream
+    This is used to achieve parallel computing and not concurrency as till i think we know diff between 2.
+    So the main concept of fork join framework is to breaks the task in to smaller subtasks until these task are simple
+    enough to solve without any further breakdowns.
+    ex. parallel merge sort, parellel maximum finding.
+    help run algorithm in parallel.
+    works on divide and conquer.
+    divide problem into subproblem until them become executable these subproblems are called task.
+    If we talk about fork-join then there is a forkjoinpool which is basically a thread poll that have fixed amount of
+    threads, usually no. of cpu cores, this thread poll is used for executing fork-join tasks, A task is not equivalent
+    to a thread, so we can execute huge no. of tasks, that means it not like we will assign a thread to each task,
+    These threads after executing all the tasks assign to it, start stealing the task of other threads that are more
+    busy threads tasks are distributed to all the threads in the thread poll.
+    Fork-join can handle load balancing quite efficiently.
+    Fork-Join pool is a thread pool used to execute task efficiently.
+    work-stealing is done in it for load balancing along diff. threads.
+
+    From now onward if we want to execute task in parallel we need to extend a RecursiveTask<T> class to it and override
+    a compute() method in which the computation took place.
+    RecursiveAction is a task without return value.
+    the diff. between RecursiveTask and RecursiveAction is task will return a Type T and action wll not return anything.
+    When we want to use fork and join on our class we need to extend one of them.
+
+
 

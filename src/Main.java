@@ -1,8 +1,10 @@
 import NoNonesence.daemonThread.RunDaemonThread;
+import NoNonesence.forkAndJoin.printList.PrintListRunner;
+import NoNonesence.forkAndJoin.withInvoke.ActionRunner;
+import NoNonesence.lockAndCondition.producerConsumer.ProducerConsumerProcessor;
 import NoNonesence.resourceLocking.synchronization.WithNoSynchronization;
 import NoNonesence.resourceLocking.synchronization.WithSynchronization;
 import NoNonesence.waitAndNotify.printOddAndEven.EvenOddNumberProcessor;
-import NoNonesence.waitAndNotify.producerConsumer.ProducerConsumerProcessor;
 import NoNonesence.waitForThread.WaitForThreadToComplete;
 
 public class Main {
@@ -20,7 +22,13 @@ public class Main {
 //        withSynchronization.runWorkerThreads();
 //        ProducerConsumerProcessor pcp = new ProducerConsumerProcessor();
 //        pcp.runProcess();
-        EvenOddNumberProcessor evenOddNumberProcessor = new EvenOddNumberProcessor();
-        evenOddNumberProcessor.runProcess();
+//        EvenOddNumberProcessor evenOddNumberProcessor = new EvenOddNumberProcessor();
+//        evenOddNumberProcessor.runProcess();
+//        ProducerConsumerProcessor producerConsumerProcessor = new ProducerConsumerProcessor();
+//        producerConsumerProcessor.runProcess();
+//        ActionRunner.runTasks();
+        PrintListRunner.printList();
     }
+
+
 }
